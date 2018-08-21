@@ -94,8 +94,9 @@ print ('dL/db: ', linear.bias.grad)
 optimizer.step()
 
 # You can also perform gradient descent at the low level.
-# linear.weight.data.sub_(0.01 * linear.weight.grad.data)
-# linear.bias.data.sub_(0.01 * linear.bias.grad.data)
+# lr = 0.01
+# linear.weight.data.sub_(lr * linear.weight.grad.data)
+# linear.bias.data.sub_(lr * linear.bias.grad.data)
 
 # Print out the loss after 1-step gradient descent.
 pred = linear(x)
@@ -166,14 +167,14 @@ class CustomDataset(torch.utils.data.Dataset):
         # 2. Preprocess the data (e.g. torchvision.Transform).
         # 3. Return a data pair (e.g. image and label).
         # Notes:
-        # if read images from folders using cv2:
+        # #if read images from folders using cv2:
         # img = cv2.imread(path)
-        # (optional*) The color channel sequence are different in torch and opencv
+        # #(optional*) The color channel sequence are different in torch and opencv
         # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
-        # img (W, H, Channel) -> Torch (Channel, W, H)
-        # When Batch_Size != 1, Torch (Batch_Szie, Channel, W, H)
+        # #img (W, H, Channel) -> Torch (Channel, W, H)
+        # #When Batch_Size != 1, Torch (Batch_Szie, Channel, W, H)
         # img = torch.from_numpy(img.transpose((2, 0, 1)))
-        # (optional*) normalize to [0,1] and remove channel 0 if img is gray image
+        # #(optional*) normalize to [0,1] and remove channel 0 if img is gray image
         # img.float().div(255).unsqueeze(0)
         pass
     def __len__(self):
