@@ -69,8 +69,8 @@ y = torch.randn(10, 2)
 
 # Build a fully connected layer.
 linear = nn.Linear(3, 2)
-print ('w: ', linear.weight)
-print ('b: ', linear.bias)
+print ('w: ', linear.weight) # linear.weight: torch.Size([2, 3])
+print ('b: ', linear.bias) # linear.bias: torch.Size([2])
 
 # Build loss function and optimizer.
 criterion = nn.MSELoss()
@@ -156,14 +156,25 @@ for images, labels in train_loader:
 # You should your build your custom dataset as below.
 class CustomDataset(torch.utils.data.Dataset):
     def __init__(self):
+    	super(torch.utils.data.Dataset, self).__init__() 
         # TODO
-        # 1. Initialize file paths or a list of file names. 
+        # 1. Initialize file paths or a list of file names.
         pass
     def __getitem__(self, index):
         # TODO
         # 1. Read one data from file (e.g. using numpy.fromfile, PIL.Image.open).
         # 2. Preprocess the data (e.g. torchvision.Transform).
         # 3. Return a data pair (e.g. image and label).
+        # Notes:
+        # if read images from folders using cv2:
+        # img = cv2.imread(path)
+        # (optional*) The color channel sequence are different in torch and opencv
+        # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
+        # img (W, H, Channel) -> Torch (Channel, W, H)
+        # When Batch_Size != 1, Torch (Batch_Szie, Channel, W, H)
+        # img = torch.from_numpy(img.transpose((2, 0, 1)))
+        # (optional*) normalize to [0,1] and remove channel 0 if img is gray image
+        # img.float().div(255).unsqueeze(0)
         pass
     def __len__(self):
         # You should change 0 to the total size of your dataset.
