@@ -30,6 +30,10 @@ b = torch.tensor(3., requires_grad=True)
 # Build a computational graph.
 y = w * x + b    # y = 2 * x + 3
 
+# print y
+print(y)        # tensor(5., grad_fn=<ThAddBackward>)
+print(y.grad_fn)# <ThAddBackward object at 0x10b735e10>
+
 # Compute gradients.
 y.backward()
 
@@ -38,6 +42,22 @@ print(x.grad)    # x.grad = 2
 print(w.grad)    # w.grad = 1 
 print(b.grad)    # b.grad = 1 
 
+# if recall backward:
+y.backward()    # RuntimeError: Trying to backward through the graph a 
+                # second time, but the buffers have already been freed. 
+                # pecify retain_graph=True when calling backward the first
+                # time.
+# Thus clear all the parameters, and use backward to calculate the grad again
+y.backward(retain_graph=True)
+y.backward()
+
+# Print out the gradients.
+print(x.grad)    # x.grad = 4 
+print(w.grad)    # w.grad = 2 
+print(b.grad)    # b.grad = 2
+
+# When calculate grad again, the the gradient will increment. 
+# That is because Pytorch accumulates the gradient into the .grad property 
 
 # ================================================================== #
 #                    2. Basic autograd example 2                     #
