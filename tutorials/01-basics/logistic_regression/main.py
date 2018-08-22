@@ -43,7 +43,7 @@ total_step = len(train_loader)
 for epoch in range(num_epochs):
     for i, (images, labels) in enumerate(train_loader):
         # Reshape images to (batch_size, input_size)
-        images = images.reshape(-1, 28*28)
+        images = images.reshape(-1, 28*28) # reshape -1, cal auto according to other nums
         
         # Forward pass
         outputs = model(images)

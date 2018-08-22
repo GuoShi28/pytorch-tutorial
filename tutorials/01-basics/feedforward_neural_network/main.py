@@ -41,11 +41,18 @@ class NeuralNet(nn.Module):
         self.fc1 = nn.Linear(input_size, hidden_size) 
         self.relu = nn.ReLU()
         self.fc2 = nn.Linear(hidden_size, num_classes)  
-    
+        # # can also write as a single structure
+        # layers = []
+        # layers.append(nn.Linear(input_size, hidden_size))
+        # layers.append(nn.ReLU())
+        # layers.append(nn.Linear(hidden_size, num_classes))
+        # self.net = nn.Sequential(*layers)
+
     def forward(self, x):
         out = self.fc1(x)
         out = self.relu(out)
         out = self.fc2(out)
+        # out = self.net(x)
         return out
 
 model = NeuralNet(input_size, hidden_size, num_classes).to(device)

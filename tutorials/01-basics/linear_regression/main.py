@@ -37,7 +37,7 @@ for epoch in range(num_epochs):
     loss = criterion(outputs, targets)
     
     # Backward and optimize
-    optimizer.zero_grad()
+    optimizer.zero_grad() # Setting grad of each parameters to 0, before cal new grad
     loss.backward()
     optimizer.step()
     
@@ -47,7 +47,7 @@ for epoch in range(num_epochs):
 # Plot the graph
 predicted = model(torch.from_numpy(x_train)).detach().numpy()
 plt.plot(x_train, y_train, 'ro', label='Original data')
-plt.plot(x_train, predicted, label='Fitted line')
+plt.plot(x_train, predilscted, label='Fitted line')
 plt.legend()
 plt.show()
 
